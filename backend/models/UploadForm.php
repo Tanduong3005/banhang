@@ -8,16 +8,14 @@ use yii\base\Model;
 
 class UploadForm extends Model
 {
-    public $imageFile;
-
-    public $filename;
+    public $avatar;
 
     public $path;
 
     public function rules()
     {
         return [
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['avatar'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -28,10 +26,10 @@ class UploadForm extends Model
             if (!is_dir($this->path)) {
                 mkdir($this->path, 0775);
             }
-            $this->filename = $this->imageFile->name;
-            $this->path .= $this->filename;
-            $this->imageFile->saveAs($this->path);
-//            $this->imageFile->saveAs('uploads/' . $this->imageFile->name . '.' . $this->imageFile->extension);
+           $avatarName = $this->avatar->name;
+            $this->path .= $avatarName;
+            $this->avatar->saveAs($this->path);
+//            $this->avatar->saveAs('uploads/' . $this->avatar->name . '.' . $this->avatar->extension);
             return true;
         } else {
             return false;

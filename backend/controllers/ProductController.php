@@ -7,9 +7,9 @@ use Yii;
 use backend\models\Product;
 use backend\models\searchs\ProductSearch;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use \yii\web\UploadedFile;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -69,6 +69,8 @@ class ProductController extends Controller
         $model = new Product();
 //        $file = UploadedFile::getInstanceByName('avatar');
 //        $file = UploadedFile::getInstance($model, 'avatar');
+        $avatar = UploadedFile::getInstance($model, 'avatar');
+        $this->import($avatar);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -77,13 +79,12 @@ class ProductController extends Controller
         ]);
     }
 
-    public function import()
+    public function import($avatar)
     {
+
         $model = new UploadForm();
         if (Yii::$app->request->isPost) {
-            $avatar = \yii\web\UploadedFile::getInstance($model, 'avatar');
-            $model->imageFile = $avatar;
-
+            $model->avatar = $avatar;
             if ($model->upload()) {
                 Yii::$app->session->setFlash('success', 'You have successfully uploaded file');
             } else {
@@ -103,7 +104,8 @@ class ProductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $this->import();
+        $avatar = UploadedFile::getInstance($model, 'avatar');
+        $this->import($avatar);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -134,7 +136,6 @@ class ProductController extends Controller
      * @return Product the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-
     protected function findModel($id)
     {
         if (($model = Product::findOne($id)) !== null) {
