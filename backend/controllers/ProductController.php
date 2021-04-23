@@ -134,6 +134,7 @@ class ProductController extends Controller
      * @return Product the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+
     protected function findModel($id)
     {
         if (($model = Product::findOne($id)) !== null) {
