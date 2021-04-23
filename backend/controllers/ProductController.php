@@ -85,11 +85,7 @@ class ProductController extends Controller
         $model = new UploadForm();
         if (Yii::$app->request->isPost) {
             $model->avatar = $avatar;
-            if ($model->upload()) {
-                Yii::$app->session->setFlash('success', 'You have successfully uploaded file');
-            } else {
-                Yii::$app->session->setFlash('error', 'You have unsuccessfully uploaded file');
-            }
+            return $model->upload();
         }
 //        return $this->render('index', ['model'=> $model]);
     }
@@ -105,8 +101,10 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
         $avatar = UploadedFile::getInstance($model, 'avatar');
-        $this->import($avatar);
+        $path = $this->import($avatar);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->updateAttributes(['avatar'=>$path]);
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
