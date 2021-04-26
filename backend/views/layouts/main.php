@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use backend\assets\AppAsset;
@@ -26,13 +27,13 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<div class="wrap bg-info">
     <?php
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-inverse navbar-static-top',
         ],
     ]);
     $menuItems = [
@@ -57,12 +58,33 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 aside-left bg-info">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <li class="list-group-item">
+                                <a href="<?=\yii\helpers\Url::home()?>" title=""><span class="house-fill"></span>Admin</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="<?=\yii\helpers\Url::toRoute(['/product'])?>" title="">Product</a>
+                            </li>
+                            <li class="list-group-item">3</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 admin-right">
+
+                <?= Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]) ?>
+                <?= Alert::widget() ?>
+                <?= $content ?>
+            </div>
+        </div>
+
     </div>
 </div>
 

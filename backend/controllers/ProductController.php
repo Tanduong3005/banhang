@@ -67,12 +67,20 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
-//        $file = UploadedFile::getInstanceByName('avatar');
-//        $file = UploadedFile::getInstance($model, 'avatar');
         $avatar = UploadedFile::getInstance($model, 'avatar');
-        $this->import($avatar);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $path = $this->import($avatar);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->updateAttributes(['avatar' => $path]);
+            $model->created_at = time();
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+
+            }else{
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+
         }
         return $this->render('create', [
             'model' => $model,
@@ -101,11 +109,13 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
         $avatar = UploadedFile::getInstance($model, 'avatar');
-        $path = $this->import($avatar);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->updateAttributes(['avatar'=>$path]);
 
-            return $this->redirect(['view', 'id' => $model->id]);
+        $path = $this->import($avatar);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $model->updateAttributes(['avatar' => $path]);
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [

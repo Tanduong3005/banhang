@@ -7,7 +7,9 @@ body.blank {
     display: flex;
     padding: 40px 0;
 }
-
+.admin-right{
+    background-color: #ffffff;
+}
 .wrap {
     min-height: 100%;
     height: auto;
@@ -53,7 +55,29 @@ body.blank .wrap > div {
     color: #c55;
     font-style: italic;
 }
+.list-group-item a{
+    padding: 5px 15px;
+    font-family: 'Rubik', sans-serif;
+    line-height: 24px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+.list-group-item a:hover {
+    color: #a8741a;
+    text-decoration: underline
+}
+.list-group-item {
+    text-align: center;
 
+    padding: 5px 15px;
+    font-family: 'Rubik', sans-serif;
+    line-height: 24px;
+    font-size: 16px;
+
+
+}
 /* add sorting icons to gridview sort links */
 a.asc:after, a.desc:after {
     position: relative;

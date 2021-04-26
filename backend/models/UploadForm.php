@@ -30,7 +30,7 @@ class UploadForm extends Model
             $this->path .= $avatarName;
             $this->avatar->saveAs($this->path);
 //            $this->avatar->saveAs('uploads/' . $this->avatar->name . '.' . $this->avatar->extension);
-            return $this->path;
+            return $avatarName;
         } else {
             return "";
         }

@@ -20,11 +20,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList(
+        [
+            0 => 'Passive',
+            1 => 'Active'
+        ],
+        [
+                'prompt' => 'chọn trạng thái'
+        ]
+    ) ?>
 
     <?= $form->field($model, 'avatar')->fileInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
 
     <?= $form->field($model, 'created_by')->textInput() ?>
 
