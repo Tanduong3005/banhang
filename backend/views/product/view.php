@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
             'created_by',
             'avatar',
+            'category_id',
         ],
     ]) ?>
 

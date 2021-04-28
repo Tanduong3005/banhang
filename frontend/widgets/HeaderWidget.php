@@ -1,5 +1,7 @@
 <?php
 namespace frontend\widgets;
+use frontend\models\CategoryModels;
+
 class HeaderWidget extends \yii\base\Widget
 {
     public function init()
@@ -8,6 +10,11 @@ class HeaderWidget extends \yii\base\Widget
     }
     public function run()
     {
-        return $this->render('headerWidgets', []);
+        $modelCategory = new CategoryModels();
+        $data = $modelCategory->getOneCategoryRecord();
+        return $this->render('headerWidgets', [
+            'data'=>$data
+        ]);
     }
+
 }

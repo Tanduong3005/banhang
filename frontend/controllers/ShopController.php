@@ -5,23 +5,29 @@ namespace frontend\controllers;
 
 
 use frontend\models\CategoryModels;
+use frontend\models\ProductModel;
 use SebastianBergmann\CodeCoverage\TestFixture\C;
 use yii\web\Controller;
 
 class ShopController extends Controller
 {
     public function actionIndex(){
-        $ModelCategory = new CategoryModels();
-        $data = $ModelCategory->GetOneCategoryRecord();
+        $modelProduct = new ProductModel();
+        $data = $modelProduct->getAllProductRecord();
         return $this->render('index', [
             'data'=>$data
         ]);
     }
-    public function actionSingleProduct(){
-        $ModelCategory = new CategoryModels();
-        $data = $ModelCategory->GetOneCategoryRecord();
+    public function actionSingleProduct($id){
+        $modelProduct = new ProductModel();
+        $data = $modelProduct->getAllProductRecord();
+        $item = $modelProduct->getProductDetail($id);
         return $this->render('single-product', [
-            'data' => $data
+            'data' => $data,
+            'item' => $item
         ]);
     }
+
+
+
 }

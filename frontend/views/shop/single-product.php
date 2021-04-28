@@ -1,6 +1,7 @@
 <?php
 /** @var TYPE_NAME $data */
 $this->title = 'Single-product';
+/** @var TYPE_NAME $item */
 
 ?>
 <div class="main-wrapper">
@@ -45,7 +46,7 @@ $this->title = 'Single-product';
                                 "asNavFor": ".sp-img_slider-nav"
                                 }'>
                                 <div class="single-slide red zoom">
-                                    <img src="assets/images/product/1-1.jpg" alt="Kenne's Product Image">
+                                    <img src="<?='/backend/web/uploads/'. $item->avatar?>" alt="Kenne's Product Image">
                                 </div>
                                 <div class="single-slide orange zoom">
                                     <img src="assets/images/product/1-2.jpg" alt="Kenne's Product Image">
@@ -77,22 +78,10 @@ $this->title = 'Single-product';
                                         {"breakpoint":575, "settings": {"slidesToShow": 2}}
                                     ]'>
                                 <div class="single-slide red">
-                                    <img src="assets/images/product/1-1.jpg" alt="Kenne's Product Thumnail">
+                                    <img src="<?= '/backend/web/uploads/'. $item->avatar?>" alt="Kenne's Product Thumnail">
                                 </div>
                                 <div class="single-slide orange">
                                     <img src="assets/images/product/1-2.jpg" alt="Kenne's Product Thumnail">
-                                </div>
-                                <div class="single-slide brown">
-                                    <img src="assets/images/product/2-1.jpg" alt="Kenne's Product Thumnail">
-                                </div>
-                                <div class="single-slide umber">
-                                    <img src="assets/images/product/2-2.jpg" alt="Kenne's Product Thumnail">
-                                </div>
-                                <div class="single-slide red">
-                                    <img src="assets/images/product/3-1.jpg" alt="Kenne's Product Thumnail">
-                                </div>
-                                <div class="single-slide orange">
-                                    <img src="assets/images/product/3-2.jpg" alt="Kenne's Product Thumnail">
                                 </div>
                             </div>
                         </div>
@@ -100,7 +89,7 @@ $this->title = 'Single-product';
                     <div class="col-lg-8">
                         <div class="sp-content">
                             <div class="sp-heading">
-                                <h5><a href="#"><?=$data->title?></a></h5>
+                                <h5><a href="#"><?=$item->title ?></a></h5>
                             </div>
                             <span class="reference">Reference: demo_1</span>
                             <div class="rating-box">
@@ -832,18 +821,6 @@ $this->title = 'Single-product';
                                     </div>
                                     <div class="single-slide orange">
                                         <img src="assets/images/product/1-2.jpg" alt="Kenne's Product Image">
-                                    </div>
-                                    <div class="single-slide brown">
-                                        <img src="assets/images/product/2-1.jpg" alt="Kenne's Product Image">
-                                    </div>
-                                    <div class="single-slide umber">
-                                        <img src="assets/images/product/2-2.jpg" alt="Kenne's Product Image">
-                                    </div>
-                                    <div class="single-slide black">
-                                        <img src="assets/images/product/3-1.jpg" alt="Kenne's Product Image">
-                                    </div>
-                                    <div class="single-slide golden">
-                                        <img src="assets/images/product/3-2.jpg" alt="Kenne's Product Image">
                                     </div>
                                 </div>
                                 <div class="kenne-element-carousel sp-img_slider-nav arrow-style-2 arrow-style-3" data-slick-options='{

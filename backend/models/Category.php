@@ -15,6 +15,8 @@ use Yii;
  * @property int|null $created_at
  * @property int|null $created_by
  * @property int|null $status
+ *
+ * @property Product[] $products
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -54,5 +56,15 @@ class Category extends \yii\db\ActiveRecord
             'created_by' => Yii::t('backend', 'Created By'),
             'status' => Yii::t('backend', 'Status'),
         ];
+    }
+
+    /**
+     * Gets query for [[Products]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProducts()
+    {
+        return $this->hasMany(Product::className(), ['category_id' => 'id']);
     }
 }

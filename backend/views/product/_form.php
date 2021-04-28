@@ -26,13 +26,15 @@ use yii\widgets\ActiveForm;
             1 => 'Active'
         ],
         [
-                'prompt' => 'chọn trạng thái'
+            'prompt' => 'chọn trạng thái'
         ]
     ) ?>
 
-    <?= $form->field($model, 'avatar')->fileInput() ?>
-
     <?= $form->field($model, 'created_by')->textInput() ?>
+
+    <?= $form->field($model, 'avatar')->fileInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'category_id')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>

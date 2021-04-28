@@ -36,6 +36,8 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'avatar') ?>
 
+    <?php // echo $form->field($model, 'category_id') ?>
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('backend', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('backend', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>

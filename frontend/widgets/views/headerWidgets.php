@@ -1,5 +1,5 @@
 <?php
-
+/** @var TYPE_NAME $data */
 use yii\helpers\Url;
 use yii\helpers\Html;
 
@@ -153,86 +153,82 @@ use yii\helpers\Html;
                                         </ul>-->
                                     </li>
                                     <li class="megamenu-holder position-static"><a href=<?= Url::toRoute(['/shop']); ?>>Shop
-                                            <!--<i class="ion-chevron-down"></i>--></a>
-                                        <!--<ul class="kenne-megamenu">
-                                            <li><span class="megamenu-title">Shop Page Layout</span>
-                                                <ul>
-                                                    <li><a href=<?/*= Url::toRoute(['/shop']); */?>>Grid Fullwidth</a></li>
-                                                    <li><a href=<?/*= Url::toRoute(['/shop']); */?>>Left Sidebar</a></li>
-                                                    <li><a href=<?/*= Url::toRoute(['/shop']); */?>>Right Sidebar</a></li>
-                                                    <li><a href=<?/*= Url::toRoute(['/shop']); */?>>List Fullwidth</a></li>
-                                                    <li><a href=<?/*= Url::toRoute(['/shop']); */?>>List Left Sidebar</a>
-                                                    </li>
-                                                    <li><a href="shop-list-right-sidebar.html">List Right
-                                                            Sidebar</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li><span class="megamenu-title">Single Product Style</span>
-                                                <ul>
-                                                    <li><a href="single-product-gallery-left.html">Gallery Left</a>
-                                                    </li>
-                                                    <li><a href="single-product-gallery-right.html">Gallery
-                                                            Right</a>
-                                                    </li>
-                                                    <li><a href="single-product-tab-style-left.html">Tab Style
-                                                            Left</a>
-                                                    </li>
-                                                    <li><a href="single-product-tab-style-right.html">Tab Style
-                                                            Right</a>
-                                                    </li>
-                                                    <li><a href="single-product-sticky-left.html">Sticky Left</a>
-                                                    </li>
-                                                    <li><a href="single-product-sticky-right.html">Sticky Right</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li><span class="megamenu-title">Single Product Type</span>
-                                                <ul>
-                                                    <li><a href="single-product.html">Single Product</a></li>
-                                                    <li><a href="single-product-sale.html">Single Product Sale</a>
-                                                    </li>
-                                                    <li><a href="single-product-group.html">Single Product Group</a>
-                                                    </li>
-                                                    <li><a href="single-product-variable.html">Single Product
-                                                            Variable</a>
-                                                    </li>
-                                                    <li><a href="single-product-affiliate.html">Single Product
-                                                            Affiliate</a>
-                                                    </li>
-                                                    <li><a href="single-product-slider.html">Single Product
-                                                            Slider</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li><span class="megamenu-title">Shop Related Pages</span>
-                                                <ul>
-                                                    <li><a href="my-account.html">My Account</a></li>
-                                                    <li><a href="login-register.html">Login | Register</a></li>
-                                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                                    <li><a href="cart.html">Cart</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                    <li><a href="compare.html">Compare</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>-->
+                                            <i class="ion-chevron-down"></i></a>
+                                        <ul class="kenne-megamenu">
+                                            <?php
+                                            foreach ($data as $item){
+                                            ?>
+                                            <li><a href=<? /*= Url::toRoute(['/shop']); */ ?>><?=$item->title?></a></li>
+                                            <?php } ?>
+
+                                        </ul>
+                                        <!--<li><span class="megamenu-title">Single Product Style</span>
+                                            <ul>
+                                                <li><a href="single-product-gallery-left.html">Gallery Left</a>
+                                                </li>
+                                                <li><a href="single-product-gallery-right.html">Gallery
+                                                        Right</a>
+                                                </li>
+                                                <li><a href="single-product-tab-style-left.html">Tab Style
+                                                        Left</a>
+                                                </li>
+                                                <li><a href="single-product-tab-style-right.html">Tab Style
+                                                        Right</a>
+                                                </li>
+                                                <li><a href="single-product-sticky-left.html">Sticky Left</a>
+                                                </li>
+                                                <li><a href="single-product-sticky-right.html">Sticky Right</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><span class="megamenu-title">Single Product Type</span>
+                                            <ul>
+                                                <li><a href="single-product.html">Single Product</a></li>
+                                                <li><a href="single-product-sale.html">Single Product Sale</a>
+                                                </li>
+                                                <li><a href="single-product-group.html">Single Product Group</a>
+                                                </li>
+                                                <li><a href="single-product-variable.html">Single Product
+                                                        Variable</a>
+                                                </li>
+                                                <li><a href="single-product-affiliate.html">Single Product
+                                                        Affiliate</a>
+                                                </li>
+                                                <li><a href="single-product-slider.html">Single Product
+                                                        Slider</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><span class="megamenu-title">Shop Related Pages</span>
+                                            <ul>
+                                                <li><a href="my-account.html">My Account</a></li>
+                                                <li><a href="login-register.html">Login | Register</a></li>
+                                                <li><a href="wishlist.html">Wishlist</a></li>
+                                                <li><a href="cart.html">Cart</a></li>
+                                                <li><a href="checkout.html">Checkout</a></li>
+                                                <li><a href="compare.html">Compare</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>-->
                                     </li>
-                                    <li><a href=<?=Url::toRoute(['/pages']);?>>Pages <!--<i class="ion-chevron-down"></i>--> </a>
+                                    <li><a href=<?= Url::toRoute(['/pages']); ?>>Pages
+                                            <!--<i class="ion-chevron-down"></i>--> </a>
                                         <!--<ul class="kenne-dropdown">
                                             <li><a href="coming-soon_page.html">Coming Soon</a></li>
                                             <li><a href="404.html">Error 404</a></li>
                                             <li><a href="faq.html">FAQ</a></li>
                                         </ul>-->
                                     </li>
-                                    <li><a href=<?=Url::toRoute(['/blog'])?>>Blog <!--<i class="ion-chevron-down"></i>--> </a>
+                                    <li><a href=<?= Url::toRoute(['/blog']) ?>>Blog
+                                            <!--<i class="ion-chevron-down"></i>--> </a>
                                         <!--<ul class="kenne-dropdown">
                                             <li><a href="blog-grid_view.html">Grid View</a></li>
                                             <li><a href="blog-list_view.html">List View</a></li>
                                             <li><a href="blog-details.html">Blog Details</a></li>
                                         </ul>-->
                                     </li>
-                                    <li><a href=<?=Url::toRoute(['/contact-us'])?>>Contact Us</a></li>
-                                    <li><a href=<?=Url::toRoute(['/about-us'])?>>About Us</a></li>
+                                    <li><a href=<?= Url::toRoute(['/contact-us']) ?>>Contact Us</a></li>
+                                    <li><a href=<?= Url::toRoute(['/about-us']) ?>>About Us</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -248,7 +244,7 @@ use yii\helpers\Html;
                             <div class="row align-items-center justify-content-between">
                                 <div class="col-lg-2 col-sm-6">
                                     <div class="header-logo_area">
-                                        <a href=<?=Url::home()?>>
+                                        <a href=<?= Url::home() ?>>
                                             <img src="./../images/kenne/logo/1.png" alt="Header Logo">
                                         </a>
                                     </div>
@@ -257,17 +253,17 @@ use yii\helpers\Html;
                                     <div class="main-menu_area">
                                         <nav class="main-nav d-flex justify-content-center">
                                             <ul>
-                                                <li class="dropdown-holder"><a href=<?=Url::home()?>>Home </a>
+                                                <li class="dropdown-holder"><a href=<?= Url::home() ?>>Home </a>
                                                 </li>
                                                 <li class="megamenu-holder position-static"><a
-                                                            href=<?=Url::toRoute(['/shop'])?>>Shop </a>
+                                                            href=<?= Url::toRoute(['/shop']) ?>>Shop </a>
                                                 </li>
-                                                <li><a href=<?=Url::toRoute(['/pages'])?>>Pages </a>
+                                                <li><a href=<?= Url::toRoute(['/pages']) ?>>Pages </a>
                                                 </li>
-                                                <li><a href=<?=Url::toRoute(['/blog'])?>>Blog </a>
+                                                <li><a href=<?= Url::toRoute(['/blog']) ?>>Blog </a>
                                                 </li>
-                                                <li><a href=<?=Url::toRoute(['/contact-us'])?>>Contact Us</a></li>
-                                                <li><a href=<?=Url::toRoute(['/about-us'])?>>About Us</a></li>
+                                                <li><a href=<?= Url::toRoute(['/contact-us']) ?>>Contact Us</a></li>
+                                                <li><a href=<?= Url::toRoute(['/about-us']) ?>>About Us</a></li>
                                             </ul>
                                         </nav>
                                     </div>
@@ -369,7 +365,7 @@ use yii\helpers\Html;
                 <div class="container">
                     <a href="#" class="btn-close white-close_btn"><i class="ion-android-close"></i></a>
                     <div class="offcanvas-inner_logo">
-                        <a href=<?=Url::home()?>>>
+                        <a href=<?= Url::home() ?>>>
                             <img src="assets/images/menu/logo/1.png" alt="Header Logo">
                         </a>
                     </div>
@@ -690,8 +686,10 @@ use yii\helpers\Html;
                 <div class="offcanvas-component">
                     <span class="offcanvas-component_title">Language</span>
                     <ul class="offcanvas-component_menu">
-                        <li <?php if(Yii::$app->controller->id == '') echo 'class="active"'?>><a href="javascript:void(0)">English</a></li>
-                        <li> <?php if(Yii::$app->controller->id == '') echo 'class="active"'?><a href="javascript:void(0)">French</a></li>
+                        <li <?php if (Yii::$app->controller->id == '') echo 'class="active"' ?>><a
+                                    href="javascript:void(0)">English</a></li>
+                        <li> <?php if (Yii::$app->controller->id == '') echo 'class="active"' ?><a
+                                    href="javascript:void(0)">French</a></li>
                     </ul>
                 </div>
                 <div class="offcanvas-component">

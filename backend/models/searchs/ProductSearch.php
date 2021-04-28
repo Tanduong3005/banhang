@@ -17,7 +17,7 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id', 'status', 'created_at', 'created_by'], 'integer'],
+            [['id', 'status', 'created_at', 'created_by', 'category_id'], 'integer'],
             [['title', 'slug', 'description', 'content', 'avatar'], 'safe'],
         ];
     }
@@ -33,7 +33,7 @@ class ProductSearch extends Product
 
     /**
      * Creates data provider instance with search query applied
-     *
+     *['options' => ['enctype' => 'multipart/form-data']]
      * @param array $params
      *
      * @return ActiveDataProvider
@@ -62,6 +62,7 @@ class ProductSearch extends Product
             'status' => $this->status,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
+            'category_id' => $this->category_id,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
