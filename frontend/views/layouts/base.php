@@ -23,6 +23,13 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <?= $content ?>
 <?php $this->endBody() ?>
+<script>
+    function addCart(id){
+        $.get('<?=Yii::$app->homeUrl.'cart/addcart'?>', {'id':id}, function (data){
+            $val = data.split("-");
+        });
+    }
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>

@@ -778,7 +778,7 @@ $this->title = 'HomePage';
                                             <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
                                                    title="Add To Compare"><i class="ion-ios-reload"></i></a>
                                             </li>
-                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" onclick="addCart(<?=$item["id"]?>)"
                                                    title="Add To cart"><i class="ion-bag"></i></a>
                                             </li>
                                         </ul>

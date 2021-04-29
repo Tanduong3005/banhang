@@ -38,6 +38,12 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'category_id') ?>
 
+    <?php // echo $form->field($model, 'price') ?>
+
+    <?php // echo $form->field($model, 'price_sale') ?>
+
+    <?php // echo $form->field($model, 'quantity') ?>
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('backend', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('backend', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>
