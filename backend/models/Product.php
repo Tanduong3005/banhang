@@ -2,34 +2,46 @@
 
 namespace backend\models;
 
-use common\models\ProductCommon;
 use Yii;
 
-
-class Product extends ProductCommon
+/**
+ * This is the model class for table "product".
+ *
+ * @property int $id
+ * @property string|null $title
+ * @property string|null $slug
+ * @property string $description
+ * @property string $content
+ * @property int|null $status
+ * @property int|null $created_at
+ * @property int|null $created_by
+ * @property string|null $avatar
+ * @property int $category_id
+ * @property int|null $price
+ * @property int|null $price_sale
+ * @property int|null $quantity
+ *
+ * @property Category $category
+ */
+class Product extends \yii\db\ActiveRecord
 {
     /**
-     * This is the model class for table "product".
-     *
-     * @property int $id
-     * @property string|null $title
-     * @property string|null $slug
-     * @property string $description
-     * @property string $content
-     * @property int|null $status
-     * @property int|null $created_at
-     * @property int|null $created_by
-     * @property string|null $avatar
-     * @property int $category_id
-     *
-     * @property Category $category
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'product';
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
             [['description', 'content', 'category_id'], 'required'],
             [['description', 'content'], 'string'],
-            [['status', 'created_at', 'created_by', 'category_id'], 'integer'],
+            [['status', 'created_at', 'created_by', 'category_id', 'price', 'price_sale', 'quantity'], 'integer'],
             [['title', 'slug', 'avatar'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
@@ -51,6 +63,9 @@ class Product extends ProductCommon
             'created_by' => Yii::t('backend', 'Created By'),
             'avatar' => Yii::t('backend', 'Avatar'),
             'category_id' => Yii::t('backend', 'Category ID'),
+            'price' => Yii::t('backend', 'Price'),
+            'price_sale' => Yii::t('backend', 'Price Sale'),
+            'quantity' => Yii::t('backend', 'Quantity'),
         ];
     }
 

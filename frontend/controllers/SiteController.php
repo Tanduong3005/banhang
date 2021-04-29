@@ -5,7 +5,9 @@ namespace frontend\controllers;
 
 
 use common\models\LoginForm;
+use frontend\models\ProductModel;
 use frontend\models\SignupForm;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use Yii;
 
@@ -14,8 +16,19 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index', []);
+        $modelProduct = new ProductModel();
+        $data = $modelProduct->getAllProductRecord();
+        $sort = $modelProduct->sortProductByCreatedAt();
+        return $this->render('index', [
+            'data' => $data,
+            'sort' => $sort
+        ]);
     }
+
+    /**
+     * Array $arr = [1,2,3,4] => ["nhan"=>1,1=>2,2=>3,3=>4] -> $arr["nhan"]
+     * Object $obj = { test: ten, test1: ten1}              -> $obj->test
+     */
 
     public function actionLogin()
     {

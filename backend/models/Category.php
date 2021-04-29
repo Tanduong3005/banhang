@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\models\CategoryCommon;
 use Yii;
 
 /**
@@ -18,7 +19,7 @@ use Yii;
  *
  * @property Product[] $products
  */
-class Category extends \yii\db\ActiveRecord
+class Category extends CategoryCommon
 {
     /**
      * {@inheritdoc}
