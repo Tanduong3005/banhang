@@ -26,7 +26,27 @@ AppAsset::register($this);
 <script>
     function addCart(id){
         $.get('<?=Yii::$app->homeUrl.'cart/addcart'?>', {'id':id}, function (data){
-            $val = data.split("-");
+            val = data.split("-");
+            $("#amount").text(val[0]);
+            $("#total").text(val[1]);
+        });
+    }
+    function delCart(id){
+        $.get('<?=Yii::$app->homeUrl.'cart/delcart'?>', {'id':id}, function (data){
+            val = data.split("-");
+            $("#amount").text(val[0]);
+            $("#total").text(val[1]);
+            $("#item_"+id).remove();
+        });
+    }
+
+    function updateCart(id){
+        amount = $("#amount_"+id).val();
+        $.get('<?=Yii::$app->homeUrl.'cart/updatecart'?>', {'id':id, 'amount':amount}, function (data){
+            val = data.split("-");
+            $("#amount").text(val[0]);
+            $("#total").text(val[1]);
+            $("#item_"+id).remove();
         });
     }
 </script>

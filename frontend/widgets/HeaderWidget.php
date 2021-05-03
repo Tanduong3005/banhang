@@ -1,6 +1,9 @@
 <?php
 namespace frontend\widgets;
 use frontend\models\CategoryModels;
+use frontend\common\Cart;
+use Yii;
+use yii\web\Session;
 
 class HeaderWidget extends \yii\base\Widget
 {
@@ -10,10 +13,14 @@ class HeaderWidget extends \yii\base\Widget
     }
     public function run()
     {
+        $session = Yii::$app->session;
+        $inforCart = $session['cart'];
+
         $modelCategory = new CategoryModels();
         $data = $modelCategory->getOneCategoryRecord();
         return $this->render('headerWidgets', [
-            'data'=>$data
+            'data'=>$data,
+            'inforCart'=>$inforCart
         ]);
     }
 

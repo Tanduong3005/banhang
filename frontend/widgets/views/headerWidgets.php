@@ -1,10 +1,19 @@
 <?php
 /** @var TYPE_NAME $data */
+/** @var TYPE_NAME $inforCart */
+
 use yii\helpers\Url;
 use yii\helpers\Html;
 
 ?>
 
+<?php
+$totalAmount = $total = 0;
+foreach ($inforCart as $key => $value) {
+    $totalAmount += $value["amount"];
+    $total += $value["price_sale"] * $value["amount"];
+}
+?>
 <?php if (Yii::$app->controller->id != "site") { ?>
     <!-- Begin Main Header Area Two -->
     <header class="main-header_area-2">
@@ -93,12 +102,12 @@ use yii\helpers\Html;
                                     <li class="minicart-wrap">
                                         <a href="#miniCart" class="minicart-btn toolbar-btn">
                                             <div class="minicart-count_area">
-                                                <span class="item-count">03</span>
+                                                <span class="item-count" id="amount"><?=$totalAmount?></span>
                                                 <i class="ion-bag"></i>
                                             </div>
                                             <div class="minicart-front_text">
                                                 <span>Cart:</span>
-                                                <span class="total-price">462.4</span>
+                                                <span class="total-price" id="total"><?=$total?></span>
                                             </div>
                                         </a>
                                     </li>
@@ -114,7 +123,7 @@ use yii\helpers\Html;
                                     <li class="minicart-wrap">
                                         <a href="#miniCart" class="minicart-btn toolbar-btn">
                                             <div class="minicart-count_area">
-                                                <span class="item-count">03</span>
+                                                <span class="item-count" id="amount">0</span>
                                                 <i class="ion-bag"></i>
                                             </div>
                                         </a>
@@ -156,9 +165,11 @@ use yii\helpers\Html;
                                             <i class="ion-chevron-down"></i></a>
                                         <ul class="kenne-megamenu">
                                             <?php
-                                            foreach ($data as $item){
-                                            ?>
-                                            <li><a href=<? /*= Url::toRoute(['/shop']); */ ?>><?=$item->title?></a></li>
+                                            foreach ($data as $item) {
+                                                ?>
+                                                <li>
+                                                    <a href=<? /*= Url::toRoute(['/shop']); */ ?>><?= $item->title ?></a>
+                                                </li>
                                             <?php } ?>
 
                                         </ul>
@@ -236,6 +247,9 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
+
+
+
         <div class="header-sticky">
             <div class="container">
                 <div class="row">
@@ -272,14 +286,14 @@ use yii\helpers\Html;
                                     <div class="header-right_area header-right_area-2">
                                         <ul>
                                             <li class="mobile-menu_wrap d-inline-block d-lg-none">
-                                                <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn color--white">
+                                                <a href="#" class="mobile-menu_btn toolbar-btn color--white">
                                                     <i class="ion-android-menu"></i>
                                                 </a>
                                             </li>
                                             <li class="minicart-wrap">
                                                 <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                     <div class="minicart-count_area">
-                                                        <span class="item-count">03</span>
+                                                        <span class="item-count" id="amount"><?=$totalAmount?></span>
                                                         <i class="ion-bag"></i>
                                                     </div>
                                                 </a>
@@ -303,6 +317,7 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
+
         <div class="offcanvas-minicart_wrapper" id="miniCart">
             <div class="offcanvas-menu-inner">
                 <a href="#" class="btn-close"><i class="ion-android-close"></i></a>
@@ -311,353 +326,33 @@ use yii\helpers\Html;
                         <h4>Shopping Cart</h4>
                     </div>
                     <ul class="minicart-list">
-                        <li class="minicart-product">
-                            <a class="product-item_remove" href="javascript:void(0)"><i
-                                        class="ion-android-close"></i></a>
+                        <?php
+                        foreach ($inforCart as $key => $value) {
+                        ?>
+                        <li class="minicart-product" id="item_<?=$key?>">
+                            <a class="product-item_remove" href=""><i
+                                        class="ion-android-close" onclick="delCart(<?=$key?>)"></i></a>
                             <div class="product-item_img">
-                                <img src="assets/images/product/1-1.jpg" alt="Kenne's Product Image">
+                                <img src="<?='/backend/web/uploads/'. $value['avatar']?>" alt="Kenne's Product Image">
                             </div>
                             <div class="product-item_content">
-                                <a class="product-item_title" href="shop-left-sidebar.html">Autem ipsa ad</a>
-                                <span class="product-item_quantity">1 x $145.80</span>
+                                <a class="product-item_title" href="<?=Url::toRoute(['/shop/single-product', 'id'=>$key])?>"><?=$value['title']?></a>
+                                <span class="product-item_quantity"><?=$value['amount']?> x <?=$value['price_sale']?></span>
                             </div>
                         </li>
-                        <li class="minicart-product">
-                            <a class="product-item_remove" href="javascript:void(0)"><i
-                                        class="ion-android-close"></i></a>
-                            <div class="product-item_img">
-                                <img src="assets/images/product/2-1.jpg" alt="Kenne's Product Image">
-                            </div>
-                            <div class="product-item_content">
-                                <a class="product-item_title" href="shop-left-sidebar.html">Tenetur illum
-                                    amet</a>
-                                <span class="product-item_quantity">1 x $150.80</span>
-                            </div>
-                        </li>
-                        <li class="minicart-product">
-                            <a class="product-item_remove" href="javascript:void(0)"><i
-                                        class="ion-android-close"></i></a>
-                            <div class="product-item_img">
-                                <img src="assets/images/product/3-1.jpg" alt="Kenne's Product Image">
-                            </div>
-                            <div class="product-item_content">
-                                <a class="product-item_title" href="shop-left-sidebar.html">Non doloremque
-                                    placeat</a>
-                                <span class="product-item_quantity">1 x $165.80</span>
-                            </div>
-                        </li>
+                        <<?php } ?>
+
                     </ul>
                 </div>
                 <div class="minicart-item_total">
                     <span>Subtotal</span>
-                    <span class="ammount">$462.4‬0</span>
+                    <span class="ammount" id="total"><?=$total?></span>
                 </div>
                 <div class="minicart-btn_area">
-                    <a href="cart.html" class="kenne-btn kenne-btn_fullwidth">Minicart</a>
+                    <a href="<?= Url::toRoute("/cart") ?>" class="kenne-btn kenne-btn_fullwidth">Minicart</a>
                 </div>
                 <div class="minicart-btn_area">
                     <a href="checkout.html" class="kenne-btn kenne-btn_fullwidth">Checkout</a>
-                </div>
-            </div>
-        </div>
-        <div class="mobile-menu_wrapper" id="mobileMenu">
-            <div class="offcanvas-menu-inner">
-                <div class="container">
-                    <a href="#" class="btn-close white-close_btn"><i class="ion-android-close"></i></a>
-                    <div class="offcanvas-inner_logo">
-                        <a href=<?= Url::home() ?>>>
-                            <img src="assets/images/menu/logo/1.png" alt="Header Logo">
-                        </a>
-                    </div>
-                    <nav class="offcanvas-navigation">
-                        <ul class="mobile-menu">
-                            <li class="menu-item-has-children active"><a href="#"><span
-                                            class="mm-text">Home</span></a>
-                                <ul class="sub-menu">
-                                    <li>
-                                        <a href="index.html">
-                                            <span class="mm-text">Home One</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="index-2.html">
-                                            <span class="mm-text">Home Two</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="index-3.html">
-                                            <span class="mm-text">Home Three</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children">
-                                <a href="#">
-                                    <span class="mm-text">Shop</span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li class="menu-item-has-children">
-                                        <a href="#">
-                                            <span class="mm-text">Grid View</span>
-                                        </a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a href="shop-fullwidth.html">
-                                                    <span class="mm-text">Grid Fullwidth</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="shop-left-sidebar.html">
-                                                    <span class="mm-text">Left Sidebar</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="shop-right-sidebar.html">
-                                                    <span class="mm-text">Right Sidebar</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">
-                                            <span class="mm-text">Shop List</span>
-                                        </a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a href="shop-list-fullwidth.html">
-                                                    <span class="mm-text">Full Width</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="shop-list-left-sidebar.html">
-                                                    <span class="mm-text">Left Sidebar</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="shop-list-right-sidebar.html">
-                                                    <span class="mm-text">Right Sidebar</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">
-                                            <span class="mm-text">Single Product Style</span>
-                                        </a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a href="single-product-gallery-left.html">
-                                                    <span class="mm-text">Gallery Left</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product-gallery-right.html">
-                                                    <span class="mm-text">Gallery Right</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product-tab-style-left.html">
-                                                    <span class="mm-text">Tab Style Left</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product-tab-style-right.html">
-                                                    <span class="mm-text">Tab Style Right</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product-sticky-left.html">
-                                                    <span class="mm-text">Sticky Left</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product-sticky-right.html">
-                                                    <span class="mm-text">Sticky Right</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">
-                                            <span class="mm-text">Single Product Type</span>
-                                        </a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a href="single-product.html">
-                                                    <span class="mm-text">Single Product</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product-sale.html">
-                                                    <span class="mm-text">Single Product Sale</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product-group.html">
-                                                    <span class="mm-text">Single Product Group</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product-variable.html">
-                                                    <span class="mm-text">Single Product Variable</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product-affiliate.html">
-                                                    <span class="mm-text">Single Product Affiliate</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product-slider.html">
-                                                    <span class="mm-text">Single Product Slider</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children">
-                                <a href="#">
-                                    <span class="mm-text">Blog</span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li class="menu-item-has-children has-children">
-                                        <a href="blog-grid_view.html">
-                                            <span class="mm-text">Grid View</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item-has-children has-children">
-                                        <a href="blog-list_view.html">
-                                            <span class="mm-text">List View</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item-has-children has-children">
-                                        <a href="blog-details.html">
-                                            <span class="mm-text">Blog Details</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children">
-                                <a href="#">
-                                    <span class="mm-text">Pages</span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li>
-                                        <a href="my-account.html">
-                                            <span class="mm-text">About Us</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="my-account.html">
-                                            <span class="mm-text">Contact</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="my-account.html">
-                                            <span class="mm-text">My Account</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="login-register.html">
-                                            <span class="mm-text">Login | Register</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="wishlist.html">
-                                            <span class="mm-text">Wishlist</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="cart.html">
-                                            <span class="mm-text">Cart</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="checkout.html">
-                                            <span class="mm-text">Checkout</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="compare.html">
-                                            <span class="mm-text">Compare</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="faq.html">
-                                            <span class="mm-text">FAQ</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="404.html">
-                                            <span class="mm-text">Error 404</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                    <nav class="offcanvas-navigation user-setting_area">
-                        <ul class="mobile-menu">
-                            <li class="menu-item-has-children active">
-                                <a href="#">
-                                        <span class="mm-text">User
-                                        Setting
-                                    </span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li>
-                                        <a href="my-account.html">
-                                            <span class="mm-text">My Account</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="login-register.html">
-                                            <span class="mm-text">Login | Register</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><a href="#"><span class="mm-text">Currency</span></a>
-                                <ul class="sub-menu">
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <span class="mm-text">EUR €</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <span class="mm-text">USD $</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><a href="#"><span class="mm-text">Language</span></a>
-                                <ul class="sub-menu">
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <span class="mm-text">English</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <span class="mm-text">Français</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <span class="mm-text">Romanian</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <span class="mm-text">Japanese</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
         </div>

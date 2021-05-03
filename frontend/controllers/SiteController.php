@@ -16,12 +16,16 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        $session = Yii::$app->session;
+        $inforCart = $session['cart'];
         $modelProduct = new ProductModel();
         $data = $modelProduct->getAllProductRecord();
         $sort = $modelProduct->sortProductByCreatedAt();
         return $this->render('index', [
             'data' => $data,
-            'sort' => $sort
+            'sort' => $sort,
+            'inforCart'=>$inforCart
+
         ]);
     }
 

@@ -1,5 +1,5 @@
 <?php
-/* @var $cartInfor */
-
-echo $cartInfor;
+///* @var $cartInfor */
+//
+//echo $cartInfor;
 ?>

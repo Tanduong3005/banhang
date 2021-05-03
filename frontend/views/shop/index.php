@@ -95,8 +95,8 @@ $this->title = 'Shop';
                                                        title="Add To Compare"><i
                                                                 class="ion-ios-reload"></i></a>
                                                 </li>
-                                                <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
-                                                       title="Add To cart"><i class="ion-bag"></i></a>
+                                                <li><a href="" data-toggle="tooltip" data-placement="right"
+                                                       title="Add To cart" onclick="addCart(<?=$item["id"]?>)"><i class="ion-bag"></i></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -107,8 +107,8 @@ $this->title = 'Shop';
                                                         href=<?= Url::toRoute(['/shop/single-product','id' => $item['id']]) ?>><?=$item->title ?></a>
                                             </h3>
                                             <div class="price-box">
-                                                <span class="new-price">$46.91</span>
-                                                <span class="old-price">$50.99</span>
+                                                <span class="new-price"><?=$item['price_sale']?></span>
+                                                <span class="old-price"><?=$item['price']?></span>
                                             </div>
                                             <div class="rating-box">
                                                 <ul>

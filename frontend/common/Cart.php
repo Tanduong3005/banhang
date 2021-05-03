@@ -39,4 +39,26 @@ class Cart
         }
         $session['cart'] = $cart;
     }
+    public function updateItem($id, $amount){
+        $session = Yii::$app->session;
+        $cart = $session['cart'];
+        if (!isset($session['cart'])){
+            $cart[$id] = array(
+                "title" => $arrData["title"],
+                "price" => $arrData["price"],
+                "price_sale" => $arrData["price_sale"],
+                "avatar" => $arrData["avatar"],
+                "amount" => 1
+            );
+        }
+    }
+
+    public function delItemCart($id){
+        $session = Yii::$app->session;
+        if (isset($session["cart"])){
+            $cart = $session["cart"];
+            unset($cart[$id]);
+            $session["cart"] = $cart;
+        }
+    }
 }

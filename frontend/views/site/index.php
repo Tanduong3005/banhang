@@ -1,13 +1,20 @@
 <?php
 
 use yii\helpers\Url;
+
 /** @var TYPE_NAME $data */
-
-
 /** @var TYPE_NAME $sort */
+/** @var TYPE_NAME $inforCart */
+
 $this->title = 'HomePage';
 ?>
-
+<?php
+$totalAmount = $total = 0;
+foreach ($inforCart as $key => $value) {
+    $totalAmount += $value["amount"];
+    $total += $value["price_sale"] * $value["amount"];
+}
+?>
 <!-- Begin Main Header Area -->
 <header class="main-header_area">
     <div class="transparent-header">
@@ -47,7 +54,7 @@ $this->title = 'HomePage';
                                 <li class="minicart-wrap">
                                     <a href="#miniCart" class="minicart-btn toolbar-btn">
                                         <div class="minicart-count_area">
-                                            <span class="item-count">03</span>
+                                            <span class="item-count" id="amount"><?= $totalAmount ?></span>
                                             <i class="ion-bag"></i>
                                         </div>
                                     </a>
@@ -113,7 +120,7 @@ $this->title = 'HomePage';
                                         <li class="minicart-wrap">
                                             <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                 <div class="minicart-count_area">
-                                                    <span class="item-count">03</span>
+                                                    <span class="item-count" id="amount"><?= $totalAmount ?></span>
                                                     <i class="ion-bag"></i>
                                                 </div>
                                             </a>
@@ -145,49 +152,32 @@ $this->title = 'HomePage';
                     <h4>Shopping Cart</h4>
                 </div>
                 <ul class="minicart-list">
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="javascript:void(0)"><i
-                                    class="ion-android-close"></i></a>
-                        <div class="product-item_img">
-                            <img src="assets/images/product/1-1.jpg" alt="Kenne's Product Image">
-                        </div>
-                        <div class="product-item_content">
-                            <a class="product-item_title" href="shop-left-sidebar.html">Autem ipsa ad</a>
-                            <span class="product-item_quantity">1 x $145.80</span>
-                        </div>
-                    </li>
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="javascript:void(0)"><i
-                                    class="ion-android-close"></i></a>
-                        <div class="product-item_img">
-                            <img src="assets/images/product/2-1.jpg" alt="Kenne's Product Image">
-                        </div>
-                        <div class="product-item_content">
-                            <a class="product-item_title" href="shop-left-sidebar.html">Tenetur illum
-                                amet</a>
-                            <span class="product-item_quantity">1 x $150.80</span>
-                        </div>
-                    </li>
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="javascript:void(0)"><i
-                                    class="ion-android-close"></i></a>
-                        <div class="product-item_img">
-                            <img src="assets/images/product/3-1.jpg" alt="Kenne's Product Image">
-                        </div>
-                        <div class="product-item_content">
-                            <a class="product-item_title" href="shop-left-sidebar.html">Non doloremque
-                                placeat</a>
-                            <span class="product-item_quantity">1 x $165.80</span>
-                        </div>
-                    </li>
+                    <?php
+                    foreach ($inforCart as $key => $value) {
+                        ?>
+                        <li class="minicart-product">
+                            <a class="product-item_remove" href="javascript:void(0)"><i
+                                        class="ion-android-close" onclick="delCart(<?=$key?>)"></i></a>
+                            <div class="product-item_img">
+                                <img src="<?= '/backend/web/uploads/' . $value['avatar'] ?>"
+                                     alt="Kenne's Product Image">
+                            </div>
+                            <div class="product-item_content">
+                                <a class="product-item_title"
+                                   href="<?= Url::toRoute(['/shop/single-product', 'id' => $key]) ?>"><?= $value['title'] ?></a>
+                                <span class="product-item_quantity"><?= $value['amount'] ?> x <?= $value['price_sale'] ?></span>
+                            </div>
+                        </li>
+                        <<?php } ?>
+
                 </ul>
             </div>
             <div class="minicart-item_total">
                 <span>Subtotal</span>
-                <span class="ammount">$462.4‬0</span>
+                <span class="ammount" id="total"><?= $total ?></span>
             </div>
             <div class="minicart-btn_area">
-                <a href="cart.html" class="kenne-btn kenne-btn_fullwidth">Minicart</a>
+                <a href="<?= Url::toRoute("/cart") ?>" class="kenne-btn kenne-btn_fullwidth">Minicart</a>
             </div>
             <div class="minicart-btn_area">
                 <a href="checkout.html" class="kenne-btn kenne-btn_fullwidth">Checkout</a>
@@ -619,7 +609,7 @@ $this->title = 'HomePage';
             ]'>
         <div class="slide-item bg-1 animation-style-01">
             <div class="slider-progress" style="background-color: #22FF00"></div>
-            <div class="container" >
+            <div class="container">
                 <div class="slide-content">
                     <span>Exclusive Offer -20% Off This Week</span>
                     <h2>Accessories <br> Explore Trending</h2>
@@ -711,7 +701,8 @@ $this->title = 'HomePage';
                 <div class="banner-item img-hover_effect">
                     <div class="banner-img">
                         <a href="javascrip:void(0)">
-                            <img src=<?=Yii::$app->assetManager->publish('@frontend/web/images/banner/1-3.png') [1]?> > alt="Banner">
+                            <img src="<?= Yii::$app->assetManager->publish('@frontend/web/images/banner/1-3.png') [1] ?>"
+                            alt="Banner">
                         </a>
                     </div>
                 </div>
@@ -751,16 +742,16 @@ $this->title = 'HomePage';
                         "slidesToShow": 1
                         }}
                     ]'>
-                    <?php foreach ($sort as $item){
+                    <?php foreach ($sort as $item) {
                         ?>
                         <div class="product-item">
                             <div class="single-product">
                                 <div class="product-img">
-                                    <a href=<?=Url::toRoute(['/shop/single-product', 'id'=>$item['id']])?>>
-                                        <img class="primary-img" src=<?='/backend/web/uploads/'. $item['avatar']?>
-                                             alt="Kenne's Product Image">
-                                        <img class="secondary-img" src=<?='/backend/web/uploads/'. $item['avatar']?>
-                                             alt="Kenne's Product Image">
+                                    <a href=<?= Url::toRoute(['/shop/single-product', 'id' => $item['id']]) ?>>
+                                        <img class="primary-img" src="<?= '/backend/web/uploads/' . $item['avatar'] ?>"
+                                        alt="Kenne's Product Image">
+                                        <img class="secondary-img" src="<?= '/backend/web/uploads/' . $item['avatar'] ?>"
+                                        alt="Kenne's Product Image">
                                     </a>
                                     <span class="sticker-2">Hot</span>
                                     <div class="add-actions">
@@ -778,7 +769,8 @@ $this->title = 'HomePage';
                                             <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
                                                    title="Add To Compare"><i class="ion-ios-reload"></i></a>
                                             </li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" onclick="addCart(<?=$item["id"]?>)"
+                                            <li><a href="" data-toggle="tooltip" data-placement="right"
+                                                   onclick="addCart(<?= $item["id"] ?>)"
                                                    title="Add To cart"><i class="ion-bag"></i></a>
                                             </li>
                                         </ul>
@@ -786,10 +778,12 @@ $this->title = 'HomePage';
                                 </div>
                                 <div class="product-content">
                                     <div class="product-desc_info">
-                                        <h3 class="product-name"><a href=<?=Url::toRoute(['/shop/single-product', 'id' => $item['id']])?>><?=$item['title']?></a></h3>
+                                        <h3 class="product-name"><a
+                                                    href=<?= Url::toRoute(['/shop/single-product', 'id' => $item['id']]) ?>><?= $item['title'] ?></a>
+                                        </h3>
                                         <div class="price-box">
-                                            <span class="new-price">$46.91</span>
-                                            <span class="old-price">$50.99</span>
+                                            <span class="new-price"><?=$item['price_sale']?></span>
+                                            <span class="old-price"><?=$item['price']?></span>
                                         </div>
                                         <div class="rating-box">
                                             <ul>
@@ -805,366 +799,366 @@ $this->title = 'HomePage';
                             </div>
                         </div>
 
-                    <?php }?>
-<!--                    <div class="product-item">
-                        <div class="single-product">
-                            <div class="product-img">
-                                <a href="single-product.html">
-                                    <img class="primary-img" src="assets/images/product/2-1.jpg"
-                                         alt="Kenne's Product Image">
-                                    <img class="secondary-img" src="assets/images/product/2-2.jpg"
-                                         alt="Kenne's Product Image">
-                                </a>
-                                <span class="sticker">Bestseller</span>
-                                <div class="add-actions">
-                                    <ul>
-                                        <li class="quick-view-btn" data-toggle="modal"
-                                            data-target="#exampleModalCenter"><a href="javascript:void(0)"
-                                                                                 data-toggle="tooltip"
-                                                                                 data-placement="right"
-                                                                                 title="Quick View"><i
-                                                        class="ion-ios-search"></i></a>
-                                        </li>
-                                        <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
-                                        </li>
-                                        <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Compare"><i class="ion-ios-reload"></i></a>
-                                        </li>
-                                        <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To cart"><i class="ion-bag"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-desc_info">
-                                    <h3 class="product-name"><a href="single-product.html">Nulla laboriosam</a></h3>
-                                    <div class="price-box">
-                                        <span class="new-price">$80.00</span>
-                                        <span class="old-price">$85,00</span>
-                                    </div>
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="single-product">
-                            <div class="product-img">
-                                <a href="single-product.html">
-                                    <img class="primary-img" src="assets/images/product/3-1.jpg"
-                                         alt="Kenne's Product Image">
-                                    <img class="secondary-img" src="assets/images/product/3-2.jpg"
-                                         alt="Kenne's Product Image">
-                                </a>
-                                <span class="sticker-2">Hot</span>
-                                <div class="add-actions">
-                                    <ul>
-                                        <li class="quick-view-btn" data-toggle="modal"
-                                            data-target="#exampleModalCenter"><a href="javascript:void(0)"
-                                                                                 data-toggle="tooltip"
-                                                                                 data-placement="right"
-                                                                                 title="Quick View"><i
-                                                        class="ion-ios-search"></i></a>
-                                        </li>
-                                        <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
-                                        </li>
-                                        <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Compare"><i class="ion-ios-reload"></i></a>
-                                        </li>
-                                        <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To cart"><i class="ion-bag"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-desc_info">
-                                    <h3 class="product-name"><a href="single-product.html">Adipisci voluptas</a></h3>
-                                    <div class="price-box">
-                                        <span class="new-price">$75.91</span>
-                                        <span class="old-price">$80.99</span>
-                                    </div>
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="single-product">
-                            <div class="product-img">
-                                <a href="single-product.html">
-                                    <img class="primary-img" src="assets/images/product/4-1.jpg"
-                                         alt="Kenne's Product Image">
-                                    <img class="secondary-img" src="assets/images/product/4-2.jpg"
-                                         alt="Kenne's Product Image">
-                                </a>
-                                <span class="sticker">Bestseller</span>
-                                <div class="add-actions">
-                                    <ul>
-                                        <li class="quick-view-btn" data-toggle="modal"
-                                            data-target="#exampleModalCenter"><a href="javascript:void(0)"
-                                                                                 data-toggle="tooltip"
-                                                                                 data-placement="right"
-                                                                                 title="Quick View"><i
-                                                        class="ion-ios-search"></i></a>
-                                        </li>
-                                        <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
-                                        </li>
-                                        <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Compare"><i class="ion-ios-reload"></i></a>
-                                        </li>
-                                        <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To cart"><i class="ion-bag"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-desc_info">
-                                    <h3 class="product-name"><a href="single-product.html">Possimus beatae</a></h3>
-                                    <div class="price-box">
-                                        <span class="new-price">$65.00</span>
-                                        <span class="old-price">$70.00</span>
-                                    </div>
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li class="silver-color"><i class="ion-ios-star-half"></i></li>
-                                            <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="single-product">
-                            <div class="product-img">
-                                <a href="single-product.html">
-                                    <img class="primary-img" src="assets/images/product/5-1.jpg"
-                                         alt="Kenne's Product Image">
-                                    <img class="secondary-img" src="assets/images/product/5-2.jpg"
-                                         alt="Kenne's Product Image">
-                                </a>
-                                <span class="sticker-2">Hot</span>
-                                <div class="add-actions">
-                                    <ul>
-                                        <li class="quick-view-btn" data-toggle="modal"
-                                            data-target="#exampleModalCenter"><a href="javascript:void(0)"
-                                                                                 data-toggle="tooltip"
-                                                                                 data-placement="right"
-                                                                                 title="Quick View"><i
-                                                        class="ion-ios-search"></i></a>
-                                        </li>
-                                        <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
-                                        </li>
-                                        <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Compare"><i class="ion-ios-reload"></i></a>
-                                        </li>
-                                        <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To cart"><i class="ion-bag"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-desc_info">
-                                    <h3 class="product-name"><a href="single-product.html">Voluptates laudantium</a>
-                                    </h3>
-                                    <div class="price-box">
-                                        <span class="new-price">$95.00</span>
-                                        <span class="old-price">$100.00</span>
-                                    </div>
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li class="silver-color"><i class="ion-ios-star-half"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="single-product">
-                            <div class="product-img">
-                                <a href="single-product.html">
-                                    <img class="primary-img" src="assets/images/product/6-1.jpg"
-                                         alt="Kenne's Product Image">
-                                    <img class="secondary-img" src="assets/images/product/6-2.jpg"
-                                         alt="Kenne's Product Image">
-                                </a>
-                                <span class="sticker">Bestseller</span>
-                                <div class="add-actions">
-                                    <ul>
-                                        <li class="quick-view-btn" data-toggle="modal"
-                                            data-target="#exampleModalCenter"><a href="javascript:void(0)"
-                                                                                 data-toggle="tooltip"
-                                                                                 data-placement="right"
-                                                                                 title="Quick View"><i
-                                                        class="ion-ios-search"></i></a>
-                                        </li>
-                                        <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
-                                        </li>
-                                        <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Compare"><i class="ion-ios-reload"></i></a>
-                                        </li>
-                                        <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To cart"><i class="ion-bag"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-desc_info">
-                                    <h3 class="product-name"><a href="single-product.html">Eligendi voluptate</a></h3>
-                                    <div class="price-box">
-                                        <span class="new-price">$60.00</span>
-                                        <span class="old-price">$65.00</span>
-                                    </div>
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li class="silver-color"><i class="ion-ios-star-half"></i></li>
-                                            <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="single-product">
-                            <div class="product-img">
-                                <a href="single-product.html">
-                                    <img class="primary-img" src="assets/images/product/7-1.jpg"
-                                         alt="Kenne's Product Image">
-                                    <img class="secondary-img" src="assets/images/product/7-2.jpg"
-                                         alt="Kenne's Product Image">
-                                </a>
-                                <span class="sticker-2">Hot</span>
-                                <div class="add-actions">
-                                    <ul>
-                                        <li class="quick-view-btn" data-toggle="modal"
-                                            data-target="#exampleModalCenter"><a href="javascript:void(0)"
-                                                                                 data-toggle="tooltip"
-                                                                                 data-placement="right"
-                                                                                 title="Quick View"><i
-                                                        class="ion-ios-search"></i></a>
-                                        </li>
-                                        <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
-                                        </li>
-                                        <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Compare"><i class="ion-ios-reload"></i></a>
-                                        </li>
-                                        <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To cart"><i class="ion-bag"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-desc_info">
-                                    <h3 class="product-name"><a href="single-product.html">Excepturi perspiciatis</a>
-                                    </h3>
-                                    <div class="price-box">
-                                        <span class="new-price">$50.00</span>
-                                        <span class="old-price">$60.00</span>
-                                    </div>
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
-                                            <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="single-product">
-                            <div class="product-img">
-                                <a href="single-product.html">
-                                    <img class="primary-img" src="assets/images/product/8-1.jpg"
-                                         alt="Kenne's Product Image">
-                                    <img class="secondary-img" src="assets/images/product/8-2.jpg"
-                                         alt="Kenne's Product Image">
-                                </a>
-                                <span class="sticker">Bestseller</span>
-                                <div class="add-actions">
-                                    <ul>
-                                        <li class="quick-view-btn" data-toggle="modal"
-                                            data-target="#exampleModalCenter"><a href="javascript:void(0)"
-                                                                                 data-toggle="tooltip"
-                                                                                 data-placement="right"
-                                                                                 title="Quick View"><i
-                                                        class="ion-ios-search"></i></a>
-                                        </li>
-                                        <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
-                                        </li>
-                                        <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To Compare"><i class="ion-ios-reload"></i></a>
-                                        </li>
-                                        <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
-                                               title="Add To cart"><i class="ion-bag"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-desc_info">
-                                    <h3 class="product-name"><a href="single-product.html">Esse eveniet</a></h3>
-                                    <div class="price-box">
-                                        <span class="new-price">$70.00</span>
-                                        <span class="old-price">$75.00</span>
-                                    </div>
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li><i class="ion-ios-star"></i></li>
-                                            <li class="silver-color"><i class="ion-ios-star-half"></i></li>
-                                            <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
+                    <?php } ?>
+                    <!--                    <div class="product-item">
+                                            <div class="single-product">
+                                                <div class="product-img">
+                                                    <a href="single-product.html">
+                                                        <img class="primary-img" src="assets/images/product/2-1.jpg"
+                                                             alt="Kenne's Product Image">
+                                                        <img class="secondary-img" src="assets/images/product/2-2.jpg"
+                                                             alt="Kenne's Product Image">
+                                                    </a>
+                                                    <span class="sticker">Bestseller</span>
+                                                    <div class="add-actions">
+                                                        <ul>
+                                                            <li class="quick-view-btn" data-toggle="modal"
+                                                                data-target="#exampleModalCenter"><a href="javascript:void(0)"
+                                                                                                     data-toggle="tooltip"
+                                                                                                     data-placement="right"
+                                                                                                     title="Quick View"><i
+                                                                            class="ion-ios-search"></i></a>
+                                                            </li>
+                                                            <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                                            </li>
+                                                            <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Compare"><i class="ion-ios-reload"></i></a>
+                                                            </li>
+                                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To cart"><i class="ion-bag"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <div class="product-desc_info">
+                                                        <h3 class="product-name"><a href="single-product.html">Nulla laboriosam</a></h3>
+                                                        <div class="price-box">
+                                                            <span class="new-price">$80.00</span>
+                                                            <span class="old-price">$85,00</span>
+                                                        </div>
+                                                        <div class="rating-box">
+                                                            <ul>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-item">
+                                            <div class="single-product">
+                                                <div class="product-img">
+                                                    <a href="single-product.html">
+                                                        <img class="primary-img" src="assets/images/product/3-1.jpg"
+                                                             alt="Kenne's Product Image">
+                                                        <img class="secondary-img" src="assets/images/product/3-2.jpg"
+                                                             alt="Kenne's Product Image">
+                                                    </a>
+                                                    <span class="sticker-2">Hot</span>
+                                                    <div class="add-actions">
+                                                        <ul>
+                                                            <li class="quick-view-btn" data-toggle="modal"
+                                                                data-target="#exampleModalCenter"><a href="javascript:void(0)"
+                                                                                                     data-toggle="tooltip"
+                                                                                                     data-placement="right"
+                                                                                                     title="Quick View"><i
+                                                                            class="ion-ios-search"></i></a>
+                                                            </li>
+                                                            <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                                            </li>
+                                                            <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Compare"><i class="ion-ios-reload"></i></a>
+                                                            </li>
+                                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To cart"><i class="ion-bag"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <div class="product-desc_info">
+                                                        <h3 class="product-name"><a href="single-product.html">Adipisci voluptas</a></h3>
+                                                        <div class="price-box">
+                                                            <span class="new-price">$75.91</span>
+                                                            <span class="old-price">$80.99</span>
+                                                        </div>
+                                                        <div class="rating-box">
+                                                            <ul>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-item">
+                                            <div class="single-product">
+                                                <div class="product-img">
+                                                    <a href="single-product.html">
+                                                        <img class="primary-img" src="assets/images/product/4-1.jpg"
+                                                             alt="Kenne's Product Image">
+                                                        <img class="secondary-img" src="assets/images/product/4-2.jpg"
+                                                             alt="Kenne's Product Image">
+                                                    </a>
+                                                    <span class="sticker">Bestseller</span>
+                                                    <div class="add-actions">
+                                                        <ul>
+                                                            <li class="quick-view-btn" data-toggle="modal"
+                                                                data-target="#exampleModalCenter"><a href="javascript:void(0)"
+                                                                                                     data-toggle="tooltip"
+                                                                                                     data-placement="right"
+                                                                                                     title="Quick View"><i
+                                                                            class="ion-ios-search"></i></a>
+                                                            </li>
+                                                            <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                                            </li>
+                                                            <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Compare"><i class="ion-ios-reload"></i></a>
+                                                            </li>
+                                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To cart"><i class="ion-bag"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <div class="product-desc_info">
+                                                        <h3 class="product-name"><a href="single-product.html">Possimus beatae</a></h3>
+                                                        <div class="price-box">
+                                                            <span class="new-price">$65.00</span>
+                                                            <span class="old-price">$70.00</span>
+                                                        </div>
+                                                        <div class="rating-box">
+                                                            <ul>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li class="silver-color"><i class="ion-ios-star-half"></i></li>
+                                                                <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-item">
+                                            <div class="single-product">
+                                                <div class="product-img">
+                                                    <a href="single-product.html">
+                                                        <img class="primary-img" src="assets/images/product/5-1.jpg"
+                                                             alt="Kenne's Product Image">
+                                                        <img class="secondary-img" src="assets/images/product/5-2.jpg"
+                                                             alt="Kenne's Product Image">
+                                                    </a>
+                                                    <span class="sticker-2">Hot</span>
+                                                    <div class="add-actions">
+                                                        <ul>
+                                                            <li class="quick-view-btn" data-toggle="modal"
+                                                                data-target="#exampleModalCenter"><a href="javascript:void(0)"
+                                                                                                     data-toggle="tooltip"
+                                                                                                     data-placement="right"
+                                                                                                     title="Quick View"><i
+                                                                            class="ion-ios-search"></i></a>
+                                                            </li>
+                                                            <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                                            </li>
+                                                            <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Compare"><i class="ion-ios-reload"></i></a>
+                                                            </li>
+                                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To cart"><i class="ion-bag"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <div class="product-desc_info">
+                                                        <h3 class="product-name"><a href="single-product.html">Voluptates laudantium</a>
+                                                        </h3>
+                                                        <div class="price-box">
+                                                            <span class="new-price">$95.00</span>
+                                                            <span class="old-price">$100.00</span>
+                                                        </div>
+                                                        <div class="rating-box">
+                                                            <ul>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li class="silver-color"><i class="ion-ios-star-half"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-item">
+                                            <div class="single-product">
+                                                <div class="product-img">
+                                                    <a href="single-product.html">
+                                                        <img class="primary-img" src="assets/images/product/6-1.jpg"
+                                                             alt="Kenne's Product Image">
+                                                        <img class="secondary-img" src="assets/images/product/6-2.jpg"
+                                                             alt="Kenne's Product Image">
+                                                    </a>
+                                                    <span class="sticker">Bestseller</span>
+                                                    <div class="add-actions">
+                                                        <ul>
+                                                            <li class="quick-view-btn" data-toggle="modal"
+                                                                data-target="#exampleModalCenter"><a href="javascript:void(0)"
+                                                                                                     data-toggle="tooltip"
+                                                                                                     data-placement="right"
+                                                                                                     title="Quick View"><i
+                                                                            class="ion-ios-search"></i></a>
+                                                            </li>
+                                                            <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                                            </li>
+                                                            <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Compare"><i class="ion-ios-reload"></i></a>
+                                                            </li>
+                                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To cart"><i class="ion-bag"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <div class="product-desc_info">
+                                                        <h3 class="product-name"><a href="single-product.html">Eligendi voluptate</a></h3>
+                                                        <div class="price-box">
+                                                            <span class="new-price">$60.00</span>
+                                                            <span class="old-price">$65.00</span>
+                                                        </div>
+                                                        <div class="rating-box">
+                                                            <ul>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li class="silver-color"><i class="ion-ios-star-half"></i></li>
+                                                                <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-item">
+                                            <div class="single-product">
+                                                <div class="product-img">
+                                                    <a href="single-product.html">
+                                                        <img class="primary-img" src="assets/images/product/7-1.jpg"
+                                                             alt="Kenne's Product Image">
+                                                        <img class="secondary-img" src="assets/images/product/7-2.jpg"
+                                                             alt="Kenne's Product Image">
+                                                    </a>
+                                                    <span class="sticker-2">Hot</span>
+                                                    <div class="add-actions">
+                                                        <ul>
+                                                            <li class="quick-view-btn" data-toggle="modal"
+                                                                data-target="#exampleModalCenter"><a href="javascript:void(0)"
+                                                                                                     data-toggle="tooltip"
+                                                                                                     data-placement="right"
+                                                                                                     title="Quick View"><i
+                                                                            class="ion-ios-search"></i></a>
+                                                            </li>
+                                                            <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                                            </li>
+                                                            <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Compare"><i class="ion-ios-reload"></i></a>
+                                                            </li>
+                                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To cart"><i class="ion-bag"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <div class="product-desc_info">
+                                                        <h3 class="product-name"><a href="single-product.html">Excepturi perspiciatis</a>
+                                                        </h3>
+                                                        <div class="price-box">
+                                                            <span class="new-price">$50.00</span>
+                                                            <span class="old-price">$60.00</span>
+                                                        </div>
+                                                        <div class="rating-box">
+                                                            <ul>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
+                                                                <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-item">
+                                            <div class="single-product">
+                                                <div class="product-img">
+                                                    <a href="single-product.html">
+                                                        <img class="primary-img" src="assets/images/product/8-1.jpg"
+                                                             alt="Kenne's Product Image">
+                                                        <img class="secondary-img" src="assets/images/product/8-2.jpg"
+                                                             alt="Kenne's Product Image">
+                                                    </a>
+                                                    <span class="sticker">Bestseller</span>
+                                                    <div class="add-actions">
+                                                        <ul>
+                                                            <li class="quick-view-btn" data-toggle="modal"
+                                                                data-target="#exampleModalCenter"><a href="javascript:void(0)"
+                                                                                                     data-toggle="tooltip"
+                                                                                                     data-placement="right"
+                                                                                                     title="Quick View"><i
+                                                                            class="ion-ios-search"></i></a>
+                                                            </li>
+                                                            <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                                            </li>
+                                                            <li><a href="compare.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To Compare"><i class="ion-ios-reload"></i></a>
+                                                            </li>
+                                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right"
+                                                                   title="Add To cart"><i class="ion-bag"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <div class="product-desc_info">
+                                                        <h3 class="product-name"><a href="single-product.html">Esse eveniet</a></h3>
+                                                        <div class="price-box">
+                                                            <span class="new-price">$70.00</span>
+                                                            <span class="old-price">$75.00</span>
+                                                        </div>
+                                                        <div class="rating-box">
+                                                            <ul>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li><i class="ion-ios-star"></i></li>
+                                                                <li class="silver-color"><i class="ion-ios-star-half"></i></li>
+                                                                <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>-->
 
                 </div>
             </div>

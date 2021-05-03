@@ -1,4 +1,10 @@
 <?php
+/** @var TYPE_NAME $inforCart */
+
+use yii\helpers\Url;
+use yii\helpers\Html;
+
+$this->title = 'Shopping Cart';
 ?>
 
 
@@ -43,39 +49,30 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="kenne-product-remove"><a href="javascript:void(0)"><i class="fa fa-trash"
-                                                                                                 title="Remove"></i></a></td>
-                                <td class="kenne-product-thumbnail"><a href="javascript:void(0)"><img src="assets/images/product/small-size/1.jpg" alt="Uren's Cart Thumbnail"></a></td>
-                                <td class="kenne-product-name"><a href="javascript:void(0)">Juma rema pola</a></td>
-                                <td class="kenne-product-price"><span class="amount">$46.80</span></td>
-                                <td class="quantity">
-                                    <label>Quantity</label>
-                                    <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" value="1" type="text">
-                                        <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                        <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                    </div>
-                                </td>
-                                <td class="product-subtotal"><span class="amount">$46.80</span></td>
-                            </tr>
-                            <tr>
-                                <td class="kenne-product-remove"><a href="javascript:void(0)"><i class="fa fa-trash"
-                                                                                                 title="Remove"></i></a></td>
-                                <td class="kenne-product-thumbnail"><a href="javascript:void(0)"><img src="assets/images/product/small-size/2.jpg" alt="Uren's Cart Thumbnail"></a></td>
-                                <td class="kenne-product-name"><a href="javascript:void(0)">Bag Goodscol model</a>
-                                </td>
-                                <td class="kenne-product-price"><span class="amount">$71.80</span></td>
-                                <td class="quantity">
-                                    <label>Quantity</label>
-                                    <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" value="1" type="text">
-                                        <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                        <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                    </div>
-                                </td>
-                                <td class="product-subtotal"><span class="amount">$71.80</span></td>
-                            </tr>
+                            <?php
+                            foreach ($inforCart as $key => $value) {
+
+                                ?>
+                                <tr>
+                                    <td class="kenne-product-remove"><a href=""><i class="fa fa-trash" title="Remove"
+                                                                                   onclick="delCart(<?= $key ?>)"></i></a>
+                                    </td>
+                                    <td class="kenne-product-thumbnail"><a href=""><img
+                                                    src="<?='/backend/web/uploads/'. $value['avatar']?>"
+                                                    alt="Uren's Cart Thumbnail"></a></td>
+                                    <td class="kenne-product-name"><a href=""><?=$value['title']?></a></td>
+                                    <td class="kenne-product-price"><span class="amount"><?=$value['price_sale']?></span></td>
+                                    <td class="quantity">
+                                        <label>Quantity</label>
+                                        <div class="cart-plus-minus">
+                                            <input class="cart-plus-minus-box" value="1" type="text" id="amount_<?=$key?>" name="amount_<?=$key?>">
+                                            <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
+                                            <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                        </div>
+                                    </td>
+                                    <td class="product-subtotal"><span class="amount">$46.80</span></td>
+                                </tr>
+                                <<?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -83,11 +80,12 @@
                         <div class="col-12">
                             <div class="coupon-all">
                                 <div class="coupon">
-                                    <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">
+                                    <input id="coupon_code" class="input-text" name="coupon_code" value=""
+                                           placeholder="Coupon code" type="text">
                                     <input class="button" name="apply_coupon" value="Apply coupon" type="submit">
                                 </div>
                                 <div class="coupon2">
-                                    <input class="button" name="update_cart" value="Update cart" type="submit">
+                                    <input class="button" name="update_cart" value="Update cart" onclick="updateCart(<?=$key?>)" type="submit">
                                 </div>
                             </div>
                         </div>

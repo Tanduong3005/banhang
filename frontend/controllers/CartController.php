@@ -15,7 +15,11 @@ class CartController extends Controller
 {
     public function actionIndex()
     {
-        return $this->render('index',[]);
+        $session = Yii::$app->session;
+        $inforCart = $session['cart'];
+        return $this->render('index',[
+            'inforCart'=>$inforCart
+        ]);
     }
 
     public function actionAddcart($id)
@@ -29,7 +33,29 @@ class CartController extends Controller
         $totalAmount = $total = 0;
         foreach ($inforCart as $key => $value){
             $totalAmount += $value["amount"];
-            $total += $value["price"] * $value["amount"];
+            $total += $value["price_sale"] * $value["amount"];
+        }
+        return $this->renderAjax('cart', ['cartInfor'=>$totalAmount."-".$total]);
+    }
+
+    public function actionUpdatecart($id)
+    {
+        $amount = Yii::$app->getRequest()->getQueryParam('amount');
+        $cart = new Cart();
+        $cart = $cart->updateItem($id,$amount);
+
+    }
+
+    public function actionDelcart($id)
+    {
+        $cart = new Cart();
+        $cart->delItemCart($id);
+        $session = Yii::$app->session;
+        $inforCart = $session['cart'];
+        $totalAmount = $total = 0;
+        foreach ($inforCart as $key => $value){
+            $totalAmount += $value["amount"];
+            $total += $value["price_sale"] * $value["amount"];
         }
         return $this->renderAjax('cart', ['cartInfor'=>$totalAmount."-".$total]);
     }

@@ -77,6 +77,7 @@ class AppAsset extends AssetBundle
         'js/plugins/jquery.zoom.min.js',
         #Timecircles JS
         'js/plugins/timecircles.js',
+        'common/js/common.js',
         'js/main.js'
 
     ];
