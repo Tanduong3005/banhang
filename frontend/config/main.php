@@ -54,6 +54,24 @@ return [
             'rules' => [
             ],
         ],
+        'assetManager' => [
+            'appendTimestamp' => true,
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'js' => [
+                        '/js/vendor/jquery-1.12.4.min.js',
+                    ],
+                    'jsOptions' => ['position' => \yii\web\View::POS_HEAD],
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'js' => []
+                ],
+                'yii\bootstrap\BootstrapAsset' => ['css' => []],
+//            'kartik\form\ActiveFormAsset' => [
+//                'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
+//            ],
+            ],
+        ],
 
     ],
     'params' => $params,

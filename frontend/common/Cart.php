@@ -8,6 +8,7 @@ class Cart
 //    public $session;
 
     public function addCart($id, $arrData){
+
         $session = Yii::$app->session;
         if (!isset($session['cart'])){
             $cart[$id] = array(
@@ -42,14 +43,15 @@ class Cart
     public function updateItem($id, $amount){
         $session = Yii::$app->session;
         $cart = $session['cart'];
-        if (!isset($session['cart'])){
-            $cart[$id] = array(
-                "title" => $arrData["title"],
-                "price" => $arrData["price"],
-                "price_sale" => $arrData["price_sale"],
-                "avatar" => $arrData["avatar"],
-                "amount" => 1
+        if (array_key_exists($id, $cart)){
+            $cart[$id]=array(
+                "title" => $cart[$id]["title"],
+                "price" => $cart[$id]["price"],
+                "price_sale" => $cart[$id]["price_sale"],
+                "avatar" => $cart[$id]["avatar"],
+                "amount" => $amount
             );
+            $session['cart'] = $cart;
         }
     }
 

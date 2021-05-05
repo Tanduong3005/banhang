@@ -8,6 +8,7 @@ use frontend\models\ProductModel;
 use yii\web\Controller;
 use frontend\common\Cart;
 use Yii;
+use yii\web\Response;
 use yii\web\Session;
 
 
@@ -24,6 +25,7 @@ class CartController extends Controller
 
     public function actionAddcart($id)
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
         $session = Yii::$app->session;
         $productInfor = new ProductModel();
         $productInfor = $productInfor->getProductDetail($id);
@@ -35,19 +37,31 @@ class CartController extends Controller
             $totalAmount += $value["amount"];
             $total += $value["price_sale"] * $value["amount"];
         }
-        return $this->renderAjax('cart', ['cartInfor'=>$totalAmount."-".$total]);
+        return ['totalAmount'=>$totalAmount,"total"=>$total];
     }
 
-    public function actionUpdatecart($id)
+    public function actionUpdatecart($id, $amount)
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $session = Yii::$app->session;
         $amount = Yii::$app->getRequest()->getQueryParam('amount');
         $cart = new Cart();
-        $cart = $cart->updateItem($id,$amount);
+        $cart->updateItem($id,$amount);
+        $inforCart = $session['cart'];
+
+//        $totalAmount = $total = 0;
+//        foreach ($inforCart as $key => $value){
+//            $totalAmount += $value["amount"];
+//            $total += $value["price_sale"] * $value["amount"];
+//        }
+//        return ['totalAmount'=>$totalAmount,"total"=>$total];
+//        return $this->renderAjax('cart', ['cartInfor'=>$totalAmount."-".$total]);
 
     }
 
     public function actionDelcart($id)
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
         $cart = new Cart();
         $cart->delItemCart($id);
         $session = Yii::$app->session;
@@ -57,7 +71,8 @@ class CartController extends Controller
             $totalAmount += $value["amount"];
             $total += $value["price_sale"] * $value["amount"];
         }
-        return $this->renderAjax('cart', ['cartInfor'=>$totalAmount."-".$total]);
+        return ['totalAmount'=>$totalAmount,"total"=>$total, 'cart'=>$inforCart];
+
     }
 
 }

@@ -9,9 +9,11 @@ use yii\helpers\Html;
 
 <?php
 $totalAmount = $total = 0;
-foreach ($inforCart as $key => $value) {
-    $totalAmount += $value["amount"];
-    $total += $value["price_sale"] * $value["amount"];
+if (isset($inforCart)) {
+    foreach ($inforCart as $key => $value) {
+        $totalAmount += $value["amount"];
+        $total += $value["price_sale"] * $value["amount"];
+    }
 }
 ?>
 <?php if (Yii::$app->controller->id != "site") { ?>
@@ -57,7 +59,7 @@ foreach ($inforCart as $key => $value) {
                                         <a href="login-register.html">Register or Sign in</a>
                                     </li>
                                     <li>
-                                        <a href="checkout.html">Checkout</a>
+                                        <a href="<?=Url::toRoute("/checkout")?>">Checkout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -113,7 +115,7 @@ foreach ($inforCart as $key => $value) {
                                     </li>
                                 </ul>
                             </div>
-                            <div class="header-right_area header-right_area-2 d-inline-block d-lg-none">
+                            <!--<div class="header-right_area header-right_area-2 d-inline-block d-lg-none">
                                 <ul>
                                     <li class="mobile-menu_wrap d-inline-block d-lg-none">
                                         <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn color--white">
@@ -140,7 +142,7 @@ foreach ($inforCart as $key => $value) {
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -346,13 +348,13 @@ foreach ($inforCart as $key => $value) {
                 </div>
                 <div class="minicart-item_total">
                     <span>Subtotal</span>
-                    <span class="ammount" id="total"><?=$total?></span>
+                    <span class="total-price" id="total"><?=$total?></span>
                 </div>
                 <div class="minicart-btn_area">
                     <a href="<?= Url::toRoute("/cart") ?>" class="kenne-btn kenne-btn_fullwidth">Minicart</a>
                 </div>
                 <div class="minicart-btn_area">
-                    <a href="checkout.html" class="kenne-btn kenne-btn_fullwidth">Checkout</a>
+                    <a href="<?=Url::toRoute("/checkout")?>" class="kenne-btn kenne-btn_fullwidth">Checkout</a>
                 </div>
             </div>
         </div>
@@ -446,7 +448,7 @@ foreach ($inforCart as $key => $value) {
             </div>
         </div>
         <div class="global-overlay"></div>
-    </header>
+    </header>`
     <!-- Main Header Area End Here Two -->
 <?php } ?>
 

@@ -6,7 +6,16 @@ use yii\helpers\Html;
 
 $this->title = 'Shopping Cart';
 ?>
+<?php
+$totalAmount = $total = 0;
+if (isset($inforCart)) {
+    foreach ($inforCart as $key => $value) {
+        $totalAmount += $value["amount"];
+        $total += $value["price_sale"] * $value["amount"];
+    }
+}
 
+?>
 
 <!-- Begin Loading Area -->
 <div class="loading">
@@ -50,29 +59,35 @@ $this->title = 'Shopping Cart';
                             </thead>
                             <tbody>
                             <?php
-                            foreach ($inforCart as $key => $value) {
+                            $arrdata = [];
 
+                            foreach ($inforCart as $key => $value) {
+                                array_push($arrdata, $key);
                                 ?>
-                                <tr>
+                                <tr id="">
                                     <td class="kenne-product-remove"><a href=""><i class="fa fa-trash" title="Remove"
                                                                                    onclick="delCart(<?= $key ?>)"></i></a>
                                     </td>
                                     <td class="kenne-product-thumbnail"><a href=""><img
-                                                    src="<?='/backend/web/uploads/'. $value['avatar']?>"
+                                                    src="<?= '/backend/web/uploads/' . $value['avatar'] ?>"
                                                     alt="Uren's Cart Thumbnail"></a></td>
-                                    <td class="kenne-product-name"><a href=""><?=$value['title']?></a></td>
-                                    <td class="kenne-product-price"><span class="amount"><?=$value['price_sale']?></span></td>
+                                    <td class="kenne-product-name"><a href=""><?= $value['title'] ?></a></td>
+                                    <td class="kenne-product-price"><span
+                                                class="amount"><?= $value['price_sale'] ?></span></td>
                                     <td class="quantity">
                                         <label>Quantity</label>
                                         <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" value="1" type="text" id="amount_<?=$key?>" name="amount_<?=$key?>">
+                                            <input class="cart-plus-minus-box" value="<?= $value['amount'] ?>"
+                                                   type="text" id="amount_<?= $key ?>" name="amount_<?= $key ?>">
                                             <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                             <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                         </div>
                                     </td>
-                                    <td class="product-subtotal"><span class="amount">$46.80</span></td>
+                                    <td class="product-subtotal"><span
+                                                class="amount"><?= $value["price_sale"] * $value["amount"] ?></span>
+                                    </td>
                                 </tr>
-                                <<?php } ?>
+                            <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -85,7 +100,8 @@ $this->title = 'Shopping Cart';
                                     <input class="button" name="apply_coupon" value="Apply coupon" type="submit">
                                 </div>
                                 <div class="coupon2">
-                                    <input class="button" name="update_cart" value="Update cart" onclick="updateCart(<?=$key?>)" type="submit">
+                                    <input class="button" name="update_cart" value="Update cart"
+                                           onclick="updateCart(<?= json_encode($arrdata)?>)" type="submit">
                                 </div>
                             </div>
                         </div>
@@ -95,8 +111,8 @@ $this->title = 'Shopping Cart';
                             <div class="cart-page-total">
                                 <h2>Cart totals</h2>
                                 <ul>
-                                    <li>Subtotal <span>$118.60</span></li>
-                                    <li>Total <span>$118.60</span></li>
+                                    <li>Total Amount <span><?= $totalAmount ?></span></li>
+                                    <li>Total <span><?= $total ?></span></li>
                                 </ul>
                                 <a href="javascript:void(0)">Proceed to checkout</a>
                             </div>

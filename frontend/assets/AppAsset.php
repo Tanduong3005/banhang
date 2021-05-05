@@ -48,7 +48,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         #jQuery JS
-        'js/vendor/jquery-1.12.4.min.js',
+
         #Modernizer JS
         'js/vendor/modernizr-2.8.3.min.js',
         #Popper JS
@@ -77,7 +77,7 @@ class AppAsset extends AssetBundle
         'js/plugins/jquery.zoom.min.js',
         #Timecircles JS
         'js/plugins/timecircles.js',
-        'common/js/common.js',
+//        'common/js/common.js',
         'js/main.js'
 
     ];

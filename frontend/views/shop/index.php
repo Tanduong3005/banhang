@@ -71,10 +71,11 @@ $this->title = 'Shop';
                             <div class="product-item">
                                 <div class="single-product">
                                     <div class="product-img">
-                                        <a href=<?= Url::toRoute(['/shop/single-product','id'=>$item['id']]) ?>>
-                                            <img class="primary-img" src="<?='backend/web/uploads/'. $item->avatar?>"
+                                        <a href=<?= Url::toRoute(['/shop/single-product', 'id' => $item['id']]) ?>>
+                                            <img class="primary-img" src="<?= 'backend/web/uploads/' . $item->avatar ?>"
                                                  alt=>
-                                            <img class="secondary-img" src="<?='/backend/web/uploads/'. $item->avatar?>"
+                                            <img class="secondary-img"
+                                                 src="<?= '/backend/web/uploads/' . $item->avatar ?>"
                                                  alt=>
                                         </a>
                                         <span class="sticker">-15%</span>
@@ -95,8 +96,10 @@ $this->title = 'Shop';
                                                        title="Add To Compare"><i
                                                                 class="ion-ios-reload"></i></a>
                                                 </li>
-                                                <li><a href="" data-toggle="tooltip" data-placement="right"
-                                                       title="Add To cart" onclick="addCart(<?=$item["id"]?>)"><i class="ion-bag"></i></a>
+                                                <li><a href="javascript:void(0)" data-toggle="tooltip"
+                                                       data-placement="right"
+                                                       title="Add To cart" onclick="addCart(<?= $item["id"] ?>)"><i
+                                                                class="ion-bag"></i></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -104,11 +107,11 @@ $this->title = 'Shop';
                                     <div class="product-content">
                                         <div class="product-desc_info">
                                             <h3 class="product-name"><a
-                                                        href=<?= Url::toRoute(['/shop/single-product','id' => $item['id']]) ?>><?=$item->title ?></a>
+                                                        href=<?= Url::toRoute(['/shop/single-product', 'id' => $item['id']]) ?>><?= $item->title ?></a>
                                             </h3>
                                             <div class="price-box">
-                                                <span class="new-price"><?=$item['price_sale']?></span>
-                                                <span class="old-price"><?=$item['price']?></span>
+                                                <span class="new-price"><?= $item['price_sale'] ?></span>
+                                                <span class="old-price"><?= $item['price'] ?></span>
                                             </div>
                                             <div class="rating-box">
                                                 <ul>
